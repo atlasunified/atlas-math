@@ -1,0 +1,1 @@
+# Algebra equations package
