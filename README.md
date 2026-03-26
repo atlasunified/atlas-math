@@ -1,26 +1,73 @@
-# Atlas Mathematical Computations
+# Atlas Math
 
-Synthetic large-scale mathematical computation generators and a matching public dataset for training, evaluation, and benchmarking.
+Atlas Math is a synthetic mathematics dataset generation toolkit and the current home of the AtlasUnified math generation codebase.
 
-- **Repository:** `atlasunified/atlas-mathematical-computations`
-- **Dataset:** `AtlasUnified/atlas-math-sets`
-- **License:** MIT
+It provides:
 
-This project contains Python generators for math problem creation plus CLI tooling to build JSONL datasets with controllable size, difficulty, topic coverage, and deduplication. The companion Hugging Face dataset currently exposes **22,259,474 rows** across **train / validation / test** splits, with JSON records built around `instruction`, `input`, `output`, and `answer`. See the dataset card for the published counts and field layout. citeturn196616view2turn196616view3turn196616view5
+- Python generators for large-scale math problem creation
+- CLI tooling to build JSONL datasets
+- controllable topic, difficulty, and output formats
+- a companion public dataset on Hugging Face: `AtlasUnified/atlas-math-sets`
 
-## What this repo provides
+## Repository status
 
-The codebase is more than a handful of arithmetic scripts: it includes a registry-driven generator framework, a CLI, an interactive builder, dataset export utilities, and hundreds of topic modules discovered from `atlas_math.modules`. The uploaded source dump shows:
+This repository, `atlasunified/atlas-math`, is the current repository.
 
-- a **global module registry** that auto-discovers enabled generator modules by `MODULE_INFO`
-- a CLI with `list` and `build` commands
-- output formats: `clean`, `extended`, and `rich`
-- post-hoc deduplication modes: `input_answer`, `input_only`, and `full`
-- difficulty controls spanning `level_1` to `level_5`
-- retry logic, yield estimation, multi-process generation, and an ANSI dashboard
-- a `Sample` schema with fields including `instruction`, `input`, `output`, `answer`, difficulty metadata, and per-sample metadata fileciteturn2file1L1-L52 fileciteturn2file3L14-L39 fileciteturn1file0L1-L111
+Earlier AtlasUnified math repositories are predecessors, including:
 
-From the uploaded source export, the current generator library contains **308 modules** across **6 top-level topics**:
+- `atlasunified/atlas-mathematical-computations`
+
+## Dataset
+
+The companion dataset is published at:
+
+- `AtlasUnified/atlas-math-sets`
+
+At the time of writing, the dataset page reports:
+
+- 22,259,474 total rows
+- train: 17.8M rows
+- validation: 2.23M rows
+- test: 2.23M rows
+- downloaded dataset size: 3.49 GB
+- auto-converted Parquet size: 1.69 GB
+- license: MIT
+
+The dataset is organized around four core fields:
+
+```json
+{
+  "answer": "[num]",
+  "input": "[equation]",
+  "output": "[num]",
+  "instruction": "[pre-generated_instruction] [equation]"
+}
+```
+
+Example:
+
+```json
+{
+  "instruction": "Sum up 98296 + 65243",
+  "input": "98296 + 65243",
+  "output": "98296 + 65243 = 163539",
+  "answer": "163539"
+}
+```
+
+## What Atlas Math provides
+
+The codebase includes:
+
+- a registry-driven generator framework
+- command-line dataset building tools
+- interactive generation flows
+- dataset export utilities
+- modular topic-based generators
+- configurable deduplication and retry logic
+- multiple dataset output formats
+
+Based on the current source structure available here, the generator library spans six top-level topics:
 
 - algebra
 - prealgebra
@@ -29,50 +76,18 @@ From the uploaded source export, the current generator library contains **308 mo
 - statistics
 - calculus
 
-That module/topic coverage comes from the repository source export provided in this chat. fileciteturn0file0
-
-## Published dataset
-
-The public dataset page describes **ATLAS MATH SETS** as mathematical computation data derived from Python scripts, including addition, subtraction, multiplication, division, fractions, decimals, square roots, cube roots, exponents, and factors. The dataset viewer shows:
-
-- **22.3M rows total**
-- **train:** 17.8M rows
-- **validation:** 2.23M rows
-- **test:** 2.23M rows
-- **downloaded dataset size:** 3.49 GB
-- **auto-converted Parquet size:** 1.69 GB
-- modalities: text
-- format: json
-- language: English
-- task tag: question answering citeturn196616view2turn196616view3turn196616view5
-
-### Dataset record format
-
-The dataset card states the JSONL format as:
-
-```json
-{"answer":"[num]","input":"[equation]","output":"[num]","instruction":"[pre-generated_instruction] [equation]"}
-```
-
-The dataset viewer examples confirm the same four core fields and show examples such as:
-
-- `input`: `98296 + 65243`
-- `output`: `98296 + 65243 = 163539`
-- `answer`: `163539`
-- `instruction`: `Sum up 98296 + 65243` citeturn196616view3turn196616view5turn196616view6
-
-## Repository architecture
+## Repository layout
 
 ```text
 atlas_math/
-├── cli.py                  # CLI entrypoint
-├── cli_commands.py         # list/build command definitions
-├── cli_generation.py       # planning, multiprocessing, retries, dedupe
-├── cli_interactive.py      # interactive builder
-├── cli_dashboard.py        # terminal progress dashboard
-├── dataset_builder.py      # dataset export utilities
-├── registry.py             # auto-discovery of generator modules
-├── schemas.py              # Sample / ModuleInfo dataclasses
+├── cli.py
+├── cli_commands.py
+├── cli_generation.py
+├── cli_interactive.py
+├── cli_dashboard.py
+├── dataset_builder.py
+├── registry.py
+├── schemas.py
 ├── modules/
 │   ├── algebra/
 │   ├── prealgebra/
@@ -83,18 +98,27 @@ atlas_math/
 └── utils/
 ```
 
-The CLI entrypoint dispatches to `list` and `build`, and falls back to an interactive menu when no subcommand is supplied. fileciteturn1file0L17-L111
+Top-level repository files include:
+
+```text
+atlas_math/
+LICENSE
+README.md
+__init__.py
+constants.py
+main.py
+```
 
 ## Installation
 
 ```bash
-git clone https://github.com/atlasunified/atlas-mathematical-computations.git
-cd atlas-mathematical-computations
+git clone https://github.com/atlasunified/atlas-math.git
+cd atlas-math
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 ```
 
-This repository appears to rely mainly on the Python standard library in the uploaded source export. If you later add packaging metadata or a requirements file, update this section accordingly. fileciteturn0file0
+If you add packaging metadata later, you can extend this section with `pip install -e .` or requirements-based installation.
 
 ## Quick start
 
@@ -104,39 +128,54 @@ This repository appears to rely mainly on the Python standard library in the upl
 python main.py list
 ```
 
-or
+### List modules as JSON
 
 ```bash
 python -m atlas_math.cli list --json
 ```
 
-The `list` command prints discovered modules and can emit JSON with module id, name, topic, difficulty levels, and whether a module supports structured generation. fileciteturn1file0L17-L52
-
 ### Build a small dataset
 
 ```bash
-python main.py build   --size small   --format clean   --output outputs/atlas-math-small.jsonl
+python main.py build \
+  --size small \
+  --format clean \
+  --output outputs/atlas-math-small.jsonl
 ```
 
 ### Build a topic-specific dataset
 
 ```bash
-python main.py build   --topic algebra   --size medium   --difficulty-mix balanced   --generation-mode auto   --progress   --output outputs/algebra-medium.jsonl
+python main.py build \
+  --topic algebra \
+  --size medium \
+  --difficulty-mix balanced \
+  --generation-mode auto \
+  --progress \
+  --output outputs/algebra-medium.jsonl
 ```
 
-### Build with an exact target size
+### Build with an exact record target
 
 ```bash
-python main.py build   --topics algebra geometry statistics   --target-records 25000   --difficulty-mix curriculum   --dedupe-mode input_answer   --max-rounds 4   --output outputs/custom-25k.jsonl
+python main.py build \
+  --topics algebra geometry statistics \
+  --target-records 25000 \
+  --difficulty-mix curriculum \
+  --dedupe-mode input_answer \
+  --max-rounds 4 \
+  --output outputs/custom-25k.jsonl
 ```
 
-## CLI reference
+## CLI overview
 
 ### `list`
 
 ```bash
 python main.py list [--json]
 ```
+
+This command enumerates discovered generator modules.
 
 ### `build`
 
@@ -161,28 +200,29 @@ python main.py build \
   [--max-rounds N]
 ```
 
-### Size presets
+## Size presets
 
-The repository defines the following presets:
+The current CLI defines these presets:
 
-- `small` = 100
-- `medium` = 1,000
-- `large` = 5,000
-- `full` = 20,000 fileciteturn1file0L112-L198
+- `small`: 100
+- `medium`: 1,000
+- `large`: 5,000
+- `full`: 20,000
 
-### Difficulty mixes
+## Difficulty mixes
 
-The repository includes these built-in mixes:
+Built-in difficulty mixes include:
 
 - `balanced`
 - `curriculum`
 - `advanced`
-- `middle_heavy` fileciteturn1file0L112-L198
+- `middle_heavy`
 
-### Output formats
+## Output formats
 
-#### `clean`
-Minimal records for model training:
+### `clean`
+
+A minimal format suitable for training pipelines.
 
 ```json
 {
@@ -194,8 +234,9 @@ Minimal records for model training:
 }
 ```
 
-#### `extended`
-Adds topic metadata:
+### `extended`
+
+Adds topic-level metadata.
 
 ```json
 {
@@ -209,19 +250,20 @@ Adds topic metadata:
 }
 ```
 
-#### `rich`
-Preserves the full serialized sample, including module ids, output text, and metadata. Serialization logic for these formats is defined in the CLI helpers. fileciteturn1file0L112-L198
+### `rich`
+
+Preserves the full serialized sample, including generated output text, module identifiers, and metadata.
 
 ## Interactive mode
 
-Running the tool without a subcommand opens an interactive menu that lets you:
+Running the tool without a subcommand opens an interactive workflow for:
 
-1. list registered modules
-2. choose one or more topics
-3. select a preset or custom target size
-4. choose a difficulty mix and generation mode
-5. set workers, tolerance, and retry rounds
-6. build directly to a JSONL output path fileciteturn1file0L1-L16 fileciteturn1file0L199-L400
+- browsing registered modules
+- selecting topics or modules
+- choosing preset or custom sizes
+- setting difficulty mix and generation mode
+- configuring workers, tolerance, and retry limits
+- writing output directly to JSONL
 
 ```bash
 python main.py
@@ -229,29 +271,28 @@ python main.py
 
 ## How generation works
 
-The generator pipeline:
+A typical build pipeline:
 
 1. discovers enabled modules through the registry
-2. expands selected topics into module ids
+2. resolves topic and module selections
 3. allocates targets across difficulty buckets
-4. generates raw records with multiprocessing
-5. tracks local and global duplicates
-6. retries under-producing buckets when needed
-7. writes the final deduplicated JSONL output
+4. generates samples, optionally with multiprocessing
+5. applies duplicate filtering
+6. retries underfilled buckets when necessary
+7. writes final JSONL output
 
-The build planner also supports structured generation when modules expose `generate_unique`, `iter_unique`, or `iter_samples`, and falls back to random generation otherwise. fileciteturn2file1L1-L52 fileciteturn1file0L112-L198
+When modules expose structured interfaces such as `generate_unique`, `iter_unique`, or `iter_samples`, the builder can use them directly. Otherwise it falls back to random generation.
 
-## Example generator modules
+## Example topic coverage
 
-The uploaded source export shows generators ranging from simple arithmetic to higher-level math, for example:
+Example generator categories present in the source tree include:
 
-- one-step, two-step, and multi-step algebra equations
-- equation special cases
+- algebra equations and systems
+- decimal and fraction conversion
+- geometry measurement and relations
 - trigonometric identities and applications
-- statistics table problems
-- calculus fundamental theorem items
-
-Each module declares `MODULE_INFO`, difficulty levels, instruction templates, and a `generate` method. fileciteturn1file0L1-L111 fileciteturn1file3L1-L62 fileciteturn1file4L1-L55 fileciteturn2file4L1-L87
+- statistics tables and interpretation
+- calculus applications
 
 ## Loading the published dataset
 
@@ -279,16 +320,16 @@ print(first)
 
 - supervised fine-tuning for math instruction following
 - arithmetic and symbolic reasoning benchmarks
-- curriculum-style training by difficulty band
+- curriculum-based training by difficulty band
 - synthetic data augmentation
-- evaluation of deduplication and generation pipelines
+- generator evaluation and deduplication testing
 
 ## Notes on `answer` vs `output`
 
-The public dataset uses both `answer` and `output`:
+The published dataset uses both fields:
 
 - `answer` is the final answer string
-- `output` is the rendered computation or worked result string
+- `output` is the rendered computation or formatted result string
 
 Example:
 
@@ -301,24 +342,20 @@ Example:
 }
 ```
 
-This distinction is visible in the dataset viewer and is useful for training either concise-answer or formatted-output tasks. citeturn196616view5
+This distinction is useful when training either concise-answer systems or formatted-solution systems.
 
 ## License
 
-Both the GitHub repository and the Hugging Face dataset page indicate **MIT** licensing. citeturn848035view0turn196616view2
+This repository uses the MIT License. The companion dataset page also lists MIT.
 
 ## Citation
 
 ```bibtex
-@misc{atlas_math_sets,
-  title        = {ATLAS Math Sets},
+@misc{atlas_math,
+  title        = {Atlas Math},
   author       = {AtlasUnified},
-  howpublished = {Hugging Face dataset and GitHub repository},
+  howpublished = {GitHub repository and Hugging Face dataset},
   year         = {2026},
-  note         = {Synthetic mathematical computation dataset and generation framework}
+  note         = {Synthetic mathematics generation toolkit and dataset}
 }
 ```
-
-## Acknowledgment
-
-This README was aligned to the current repository source exported in the uploaded file rather than only the older short GitHub landing README, so it reflects the present CLI and module architecture more accurately. fileciteturn0file0
