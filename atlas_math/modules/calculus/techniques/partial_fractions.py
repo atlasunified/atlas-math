@@ -20,13 +20,13 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_problem(rng: random.Random):
-items = [
-    ("∫ 1/(x(x+1)) dx", "ln|x| - ln|x+1| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
-    ("∫ 3/((x-1)(x+2)) dx", "ln|x-1| - ln|x+2| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
-    ("∫ 1/(x^2-1) dx", "(1/2)ln|x-1| - (1/2)ln|x+1| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
-    ("∫ 1/(x(x+2)^2) dx", "(1/4)ln|x| - (1/4)ln|x+2| - 1/(2(x+2)) + C", {"denominator_type": "linear_with_repeat", "repeated_factor": True}),
-]
-return rng.choice(items)
+    items = [
+        ("∫ 1/(x(x+1)) dx", "ln|x| - ln|x+1| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
+        ("∫ 3/((x-1)(x+2)) dx", "ln|x-1| - ln|x+2| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
+        ("∫ 1/(x^2-1) dx", "(1/2)ln|x-1| - (1/2)ln|x+1| + C", {"denominator_type": "distinct_linear", "repeated_factor": False}),
+        ("∫ 1/(x(x+2)^2) dx", "(1/4)ln|x| - (1/4)ln|x+2| - 1/(2(x+2)) + C", {"denominator_type": "linear_with_repeat", "repeated_factor": True}),
+    ]
+    return rng.choice(items)
 
 
 def _build_problem(rng: random.Random, difficulty: str):

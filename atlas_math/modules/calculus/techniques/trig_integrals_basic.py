@@ -20,17 +20,17 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_problem(rng: random.Random):
-items = [
-    ("∫ sin(x) dx", "-cos(x) + C", {"trig_family": "sin_cos", "identity_used": False}),
-    ("∫ cos(x) dx", "sin(x) + C", {"trig_family": "sin_cos", "identity_used": False}),
-    ("∫ sec^2(x) dx", "tan(x) + C", {"trig_family": "tan_sec", "identity_used": False}),
-    ("∫ csc^2(x) dx", "-cot(x) + C", {"trig_family": "cot_csc", "identity_used": False}),
-    ("∫ sec(x)tan(x) dx", "sec(x) + C", {"trig_family": "tan_sec", "identity_used": False}),
-    ("∫ csc(x)cot(x) dx", "-csc(x) + C", {"trig_family": "cot_csc", "identity_used": False}),
-    ("∫ sin^2(x) dx", "x/2 - sin(2x)/4 + C", {"trig_family": "power_reduction", "identity_used": True}),
-    ("∫ cos^2(x) dx", "x/2 + sin(2x)/4 + C", {"trig_family": "power_reduction", "identity_used": True}),
-]
-return rng.choice(items)
+    items = [
+        ("∫ sin(x) dx", "-cos(x) + C", {"trig_family": "sin_cos", "identity_used": False}),
+        ("∫ cos(x) dx", "sin(x) + C", {"trig_family": "sin_cos", "identity_used": False}),
+        ("∫ sec^2(x) dx", "tan(x) + C", {"trig_family": "tan_sec", "identity_used": False}),
+        ("∫ csc^2(x) dx", "-cot(x) + C", {"trig_family": "cot_csc", "identity_used": False}),
+        ("∫ sec(x)tan(x) dx", "sec(x) + C", {"trig_family": "tan_sec", "identity_used": False}),
+        ("∫ csc(x)cot(x) dx", "-csc(x) + C", {"trig_family": "cot_csc", "identity_used": False}),
+        ("∫ sin^2(x) dx", "x/2 - sin(2x)/4 + C", {"trig_family": "power_reduction", "identity_used": True}),
+        ("∫ cos^2(x) dx", "x/2 + sin(2x)/4 + C", {"trig_family": "power_reduction", "identity_used": True}),
+    ]
+    return rng.choice(items)
 
 
 def _build_problem(rng: random.Random, difficulty: str):

@@ -6,6 +6,15 @@ from dataclasses import dataclass
 from types import ModuleType
 from typing import Any
 
+_MIN_INSTRUCTION_VARIANTS = 5
+_GENERIC_INSTRUCTION_FALLBACKS = (
+    "Solve {problem}.",
+    "Compute {problem}.",
+    "Evaluate {problem}.",
+    "Find the result for {problem}.",
+    "Work through {problem}.",
+)
+
 
 @dataclass
 class ModuleInfoView:
@@ -37,6 +46,34 @@ def _coerce_info(raw: Any, fallback_module_id: str) -> ModuleInfoView:
     return ModuleInfoView(module_id, name, topic, subtopic, list(difficulty_levels), enabled, raw)
 
 
+def _ensure_instruction_variance(module: ModuleType) -> None:
+    for attr_name in ("INSTRUCTION_TEMPLATES", "INSTRUCTIONS"):
+        templates = getattr(module, attr_name, None)
+        if templates is None:
+            continue
+
+        try:
+            variants = [str(item) for item in templates if str(item).strip()]
+        except TypeError:
+            continue
+
+        if len(variants) >= _MIN_INSTRUCTION_VARIANTS:
+            continue
+
+        for fallback in _GENERIC_INSTRUCTION_FALLBACKS:
+            if fallback not in variants:
+                variants.append(fallback)
+            if len(variants) >= _MIN_INSTRUCTION_VARIANTS:
+                break
+
+        if isinstance(templates, list):
+            templates[:] = variants
+        elif isinstance(templates, tuple):
+            setattr(module, attr_name, tuple(variants))
+        else:
+            setattr(module, attr_name, variants)
+
+
 class ModuleRegistry:
     def __init__(self, package_name: str = "atlas_math.modules") -> None:
         self.package_name = package_name
@@ -58,6 +95,7 @@ class ModuleRegistry:
                 module = importlib.import_module(item.name)
                 if not hasattr(module, "MODULE_INFO") or not hasattr(module, "generate"):
                     continue
+                _ensure_instruction_variance(module)
                 fallback_module_id = item.name.replace(f"{self.package_name}.", "")
                 info = _coerce_info(getattr(module, "MODULE_INFO"), fallback_module_id)
                 if info.enabled:

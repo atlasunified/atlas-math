@@ -20,20 +20,20 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_pair(rng: random.Random):
-pairs = [
-    ("∫ x e^x dx", "x e^x - e^x + C", {"u_choice": "x", "dv_choice": "e^x dx", "reduction": False}),
-    ("∫ x sin(x) dx", "-x cos(x) + sin(x) + C", {"u_choice": "x", "dv_choice": "sin(x) dx", "reduction": False}),
-    ("∫ x cos(x) dx", "x sin(x) + cos(x) + C", {"u_choice": "x", "dv_choice": "cos(x) dx", "reduction": False}),
-    ("∫ ln(x) dx", "x ln(x) - x + C", {"u_choice": "ln(x)", "dv_choice": "dx", "reduction": False}),
-    ("∫ x^2 e^x dx", "e^x(x^2 - 2x + 2) + C", {"u_choice": "x^2", "dv_choice": "e^x dx", "reduction": True}),
-]
-return rng.choice(pairs)
+    pairs = [
+        ("∫ x e^x dx", "x e^x - e^x + C", {"u_choice": "x", "dv_choice": "e^x dx", "reduction": False}),
+        ("∫ x sin(x) dx", "-x cos(x) + sin(x) + C", {"u_choice": "x", "dv_choice": "sin(x) dx", "reduction": False}),
+        ("∫ x cos(x) dx", "x sin(x) + cos(x) + C", {"u_choice": "x", "dv_choice": "cos(x) dx", "reduction": False}),
+        ("∫ ln(x) dx", "x ln(x) - x + C", {"u_choice": "ln(x)", "dv_choice": "dx", "reduction": False}),
+        ("∫ x^2 e^x dx", "e^x(x^2 - 2x + 2) + C", {"u_choice": "x^2", "dv_choice": "e^x dx", "reduction": True}),
+    ]
+    return rng.choice(pairs)
 
 
 def _build_problem(rng: random.Random, difficulty: str):
     problem, answer, metadata = _pick_pair(rng)
-metadata["integral_type"] = "indefinite"
-return problem, answer, metadata
+    metadata["integral_type"] = "indefinite"
+    return problem, answer, metadata
 
 
 def _build_sample(rng: random.Random, difficulty: str):

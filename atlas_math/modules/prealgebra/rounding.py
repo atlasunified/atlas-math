@@ -42,7 +42,11 @@ def _build_whole(rng: random.Random, difficulty: str):
     n = rng.randint(0, limit)
     answer = str(_round_whole(n, unit))
     metadata = {"target_place": name, "original_format": "whole_number"}
-    instruction = rng.choice(INSTRUCTION_TEMPLATES).format(number=n, target_place=name)
+    instruction = rng.choice(INSTRUCTION_TEMPLATES).format(
+        number=n,
+        target_place=name,
+        problem=f"{n} to the nearest {name}",
+    )
     return instruction, str(n), answer, metadata
 
 
@@ -55,7 +59,11 @@ def _build_decimal(rng: random.Random):
     target_name = {0: "whole number", 1: "tenth", 2: "hundredth"}[target_places]
     answer = _round_decimal(text, target_places)
     metadata = {"target_place": target_name, "original_format": f"decimal_{original_places}_places"}
-    instruction = rng.choice(INSTRUCTION_TEMPLATES).format(number=text, target_place=target_name)
+    instruction = rng.choice(INSTRUCTION_TEMPLATES).format(
+        number=text,
+        target_place=target_name,
+        problem=f"{text} to the nearest {target_name}",
+    )
     return instruction, text, answer, metadata
 
 

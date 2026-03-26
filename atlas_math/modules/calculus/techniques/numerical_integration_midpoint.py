@@ -20,13 +20,13 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_problem(rng: random.Random):
-items = [
-    ("Approximate ∫_0^2 x^2 dx with n = 2", "2.5", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": True}),
-    ("Approximate ∫_0^4 x dx with n = 4", "8", {"rule": "midpoint", "n_subintervals": 4, "exact_value_known": True}),
-    ("Approximate ∫_0^2 (x+1) dx with n = 2", "4", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": True}),
-    ("Approximate ∫_0^2 e^x dx with n = 2", "4.541", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": False}),
-]
-return rng.choice(items)
+    items = [
+        ("Approximate ∫_0^2 x^2 dx with n = 2", "2.5", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": True}),
+        ("Approximate ∫_0^4 x dx with n = 4", "8", {"rule": "midpoint", "n_subintervals": 4, "exact_value_known": True}),
+        ("Approximate ∫_0^2 (x+1) dx with n = 2", "4", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": True}),
+        ("Approximate ∫_0^2 e^x dx with n = 2", "4.541", {"rule": "midpoint", "n_subintervals": 2, "exact_value_known": False}),
+    ]
+    return rng.choice(items)
 
 
 def _build_problem(rng: random.Random, difficulty: str):
