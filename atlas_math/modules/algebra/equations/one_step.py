@@ -45,7 +45,7 @@ def _build(rng, difficulty):
         problem = f"{k}{x} = {_frac_str(rhs)}"
     else:
         k = rng.choice([2,3,4,5,6,8])
-        rhs = sol / k
+        rhs = Fraction(sol, k)
         problem = f"{x}/{k} = {_frac_str(rhs)}"
     ans = _frac_str(sol)
     metadata = {
