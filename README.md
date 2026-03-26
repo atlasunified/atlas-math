@@ -1,24 +1,3 @@
----
-language:
-- en
-license: mit
-task_categories:
-- text-generation
-- question-answering
-pretty_name: Atlas Math Sets
-size_categories:
-- 10M<n<100M
-configs:
-- config_name: default
-  data_files:
-  - split: train
-    path: data/train.jsonl
-  - split: validation
-    path: data/validation.jsonl
-  - split: test
-    path: data/test.jsonl
----
-
 <p align="center">
   <img src="./atlas-math-logo.png" alt="Atlas Math logo" width="320">
 </p>
