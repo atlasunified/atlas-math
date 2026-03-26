@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import random
+import re
 from atlas_math.modules.shared.common import make_sample
 
 MODULE_INFO = {
@@ -49,7 +50,7 @@ def _build_problem(rng: random.Random, difficulty: str):
         "coefficients": [int(s) for s in []],  # lightweight placeholder
         "variable_count": var_count,
     }
-    metadata["coefficients"] = [int(x) for x in ''.join(ch if ch.isdigit() or ch == '-' else ' ' for ch in problem).split()] or [0]
+    metadata["coefficients"] = [int(x) for x in re.findall(r"-?\d+", problem)] or [0]
     return problem, answer, metadata
 
 def _build_sample(rng: random.Random, difficulty: str):

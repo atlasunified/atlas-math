@@ -20,14 +20,14 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_problem(rng: random.Random):
-items = [
-    ("∫_1^∞ 1/x^2 dx", "1", {"improper_type": "infinite_interval", "convergent": True}),
-    ("∫_1^∞ 1/x dx", "diverges", {"improper_type": "infinite_interval", "convergent": False}),
-    ("∫_0^1 1/sqrt(x) dx", "2", {"improper_type": "endpoint_singularity", "convergent": True}),
-    ("∫_0^1 1/x dx", "diverges", {"improper_type": "endpoint_singularity", "convergent": False}),
-    ("∫_-∞^∞ 1/(1+x^2) dx", "π", {"improper_type": "two_sided_infinite", "convergent": True}),
-]
-return rng.choice(items)
+    items = [
+        ("∫_1^∞ 1/x^2 dx", "1", {"improper_type": "infinite_interval", "convergent": True}),
+        ("∫_1^∞ 1/x dx", "diverges", {"improper_type": "infinite_interval", "convergent": False}),
+        ("∫_0^1 1/sqrt(x) dx", "2", {"improper_type": "endpoint_singularity", "convergent": True}),
+        ("∫_0^1 1/x dx", "diverges", {"improper_type": "endpoint_singularity", "convergent": False}),
+        ("∫_-∞^∞ 1/(1+x^2) dx", "π", {"improper_type": "two_sided_infinite", "convergent": True}),
+    ]
+    return rng.choice(items)
 
 
 def _build_problem(rng: random.Random, difficulty: str):

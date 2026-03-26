@@ -20,13 +20,13 @@ def _instruction(rng: random.Random, problem: str) -> str:
 
 
 def _pick_problem(rng: random.Random):
-items = [
-    ("∫ dx / sqrt(9 - x^2)", "arcsin(x/3) + C", {"substitution_family": "x=asinθ", "radical_form": "a^2-x^2"}),
-    ("∫ dx / (x^2 + 16)", "(1/4) arctan(x/4) + C", {"substitution_family": "x=atanθ", "radical_form": "x^2+a^2"}),
-    ("∫ dx / (x sqrt(x^2 - 25))", "(1/5) arcsec(|x|/5) + C", {"substitution_family": "x=asecθ", "radical_form": "x^2-a^2"}),
-    ("∫ sqrt(4 - x^2) dx", "(x/2)sqrt(4-x^2) + 2arcsin(x/2) + C", {"substitution_family": "x=asinθ", "radical_form": "a^2-x^2"}),
-]
-return rng.choice(items)
+    items = [
+        ("∫ dx / sqrt(9 - x^2)", "arcsin(x/3) + C", {"substitution_family": "x=asinθ", "radical_form": "a^2-x^2"}),
+        ("∫ dx / (x^2 + 16)", "(1/4) arctan(x/4) + C", {"substitution_family": "x=atanθ", "radical_form": "x^2+a^2"}),
+        ("∫ dx / (x sqrt(x^2 - 25))", "(1/5) arcsec(|x|/5) + C", {"substitution_family": "x=asecθ", "radical_form": "x^2-a^2"}),
+        ("∫ sqrt(4 - x^2) dx", "(x/2)sqrt(4-x^2) + 2arcsin(x/2) + C", {"substitution_family": "x=asinθ", "radical_form": "a^2-x^2"}),
+    ]
+    return rng.choice(items)
 
 
 def _build_problem(rng: random.Random, difficulty: str):
