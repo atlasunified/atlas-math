@@ -1,3 +1,4 @@
+<img src="path/to/image.png" alt="description" width="400">
 # Atlas Math
 
 Atlas Math is a synthetic mathematics dataset generation toolkit and the current home of the AtlasUnified math generation codebase.
