@@ -1,4 +1,4 @@
-<img src="atlas-math/atlas-math-logo.png" alt="description" width="400">
+<img src="./atlas-math-logo.png" alt="Atlas Math logo" width="50%">
 
 # Atlas Math
 
